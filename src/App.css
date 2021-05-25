@@ -25,7 +25,7 @@ body,
 
 .map_results {
     height: 300px;
-    width: 450px;
+    width: auto;
 }
 
 .marker {

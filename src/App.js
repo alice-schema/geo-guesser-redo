@@ -21,7 +21,6 @@ const App = () => {
   const [scores, setScores] = useState([]);
 
 
-  // ------------ EFFECTS ------------
   // populating inventory of coordinates for the current game
   // - only at the beginning of the game
   useEffect(() => {
@@ -33,17 +32,6 @@ const App = () => {
   useEffect(() => {
     if (positionInventory) setPosition(positionInventory[round])
   }, [round, positionInventory])
-
-  // calculate score
-  // - every time guess updates
-  useEffect(() => {
-    if (guessPosition) {
-      const roundDistance = getDistance(position, guessPosition);
-      setDistance(roundDistance);
-      setScores([...scores, calculateScore(roundDistance)]);
-    }
-  }, [guessPosition])
-  // ------------ END EFFECTS ------------
 
 
   const handleClose = () => {
@@ -62,6 +50,13 @@ const App = () => {
 
   const submitGuess = (markerPosition) => {
     setGuessPosition(markerPosition);
+    
+    // calculate distance
+    const roundDistance = getDistance(position, markerPosition);
+    setDistance(roundDistance);
+    // calculate scores based on distance
+    setScores(prevScores => [...prevScores, calculateScore(roundDistance)]);
+    
     setIsModalOpen(true);
   }
 
